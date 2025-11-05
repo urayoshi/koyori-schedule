@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>博衣こより配信スケジュール</title>
+    <style>
+        body {
+            background-color: #fdfdfe;
+            font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ff66b3;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            border-bottom: 3px solid #ff66b3;
+        }
+
+        .tab {
+            padding: 15px 40px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ff66b3;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid #ff66b3;
+            color: #ff3399;
+        }
+
+        .content-section {
+            display: none;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 2px solid #ffd1ec;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(255, 192, 224, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .thumb {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .time {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        button.refresh {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff99cc;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button.refresh:hover {
+            background-color: #ff66b3;
+        }
+        /* ===== 動画カードの統一デザイン ===== */
+.card {
+    width: 90%;
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 16px;
+    background-color: #fff;
+    border: 2px solid #ffd1ec;
+    box-shadow: 0 0 10px rgba(255, 192, 203, 0.4);
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+/* 🔹全タブ共通：画像サイズと余白を固定 */
+.card img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+/* 🔹動画タイトルのリンク余白統一 */
+.card a {
+    display: block;
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 5px;
+    text-decoration: none;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+/* 🔹日時テキストの位置調整 */
+.time {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 8px;
+}
+
+    </style>
+</head>
+<body>
+    <header>博衣こより配信スケジュール</header>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('live')">LIVE</div>
+        <div class="tab" onclick="showTab('upcoming')">配信予定</div>
+        <div class="tab" onclick="showTab('archive')">直近のアーカイブ</div>
+    </div>
+
+    <div id="live" class="content-section active">
+        {% if live %}
+            {% for v in live %}
+                <div class="card">
+                    <a href="{{ v.url }}" target="_blank">
+                        <img src="{{ v.thumb }}" class="thumb">
+                        <p>{{ v.title }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>現在配信中のLiveはありません。</h2>
+        {% endif %}
+    </div>
+
+    <div id="upcoming" class="content-section">
+        {% if up %}
+            {% for v in up %}
+                <div class="card">
+                    <a href="{{ v.url }}" target="_blank">
+                        <img src="{{ v.thumb }}" class="thumb">
+                        <p>{{ v.title }}</p>
+                    </a>
+                    <p class="time">⏰ {{ v.time }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>配信予定の動画はありません。</h2>
+        {% endif %}
+    </div>
+
+    <div id="archive" class="content-section">
+        {% if arc %}
+            {% for v in arc %}
+                <div class="card">
+                    <a href="{{ v.url }}" target="_blank">
+                        <img src="{{ v.thumb }}" class="thumb">
+                        <p>{{ v.title }}</p>
+                    </a>
+                    <p class="time">🕒 配信日: {{ v.time }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>アーカイブ動画はありません。</h2>
+        {% endif %}
+    </div>
+
+    <div style="text-align:center;">
+        <button class="refresh" onclick="location.reload()">🔄 最新の情報に更新</button>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+
+    <footer style="text-align:center; padding:30px; background-color:#ffe4f2; margin-top:40px;">
+        <h3 style="color:#ff66b3; margin-bottom:10px;">🧪 Follow 博衣こより 🧪</h3>
+        <p style="font-size:18px;">
+            <a href="https://www.youtube.com/channel/UC6eWCld0KwmyHFbAqK3V-Rw" target="_blank" style="margin:0 8px;">🎥 YouTube</a> |
+            <a href="https://x.com/hakuikoyori" target="_blank" style="margin:0 8px;">🐦 X (Twitter)</a> |
+            <a href="https://www.tiktok.com/@hakuikoyori_hololive" target="_blank" style="margin:0 8px;">🎶 TikTok</a>
+        </p>
+        <p style="font-size:12px; color:#777;">非公式ファン制作ページ / Data via YouTube API</p>
+    </footer>
+
+</body>
+</html>
