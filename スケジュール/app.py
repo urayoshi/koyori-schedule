@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
 
-API_KEY = "AIzaSyAKWDZ3PCKEbKtMM8ZLYMKsLjzSG0UTUk0"
+API_KEY = "YOUR_API_KEY_HERE"  # ← 実際のキーは削除
 CHANNEL_ID = "UC6eWCld0KwmyHFbAqK3V-Rw"  # 博衣こより
 
 # ==============================
