@@ -30,7 +30,6 @@ Flask と YouTube Data API v3 を使用し、
    pip install flask requests python-dotenv
    python app.py
 
-ブラウザで http://127.0.0.1:5000 にアクセス
 
 このアプリは非公式のファン制作であり、
 カバー株式会社およびホロライブプロダクションとは関係ありません。
