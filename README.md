@@ -53,11 +53,8 @@ Python が使えれば、誰でもすぐ実行できるように設計しまし�
 
 📁 ディレクトリ構造
 ---
-/koyori-schedule
- ├── app.py
- ├── templates/
- │    └── index.html
- └── .env （APIキーを保存する場合）
+<img width="218" height="115" alt="image" src="https://github.com/user-attachments/assets/1522bbd2-09bc-4f4b-8f12-dbfec89fc83c" />
+
 
 🚀 実行方法
 ---
