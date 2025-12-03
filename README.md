@@ -17,7 +17,6 @@ YouTube Data API v3 を利用し、
 
 🧰 使用技術
 ---
-項目	内容
 言語	Python
 フレームワーク	Flask
 API	YouTube Data API v3
