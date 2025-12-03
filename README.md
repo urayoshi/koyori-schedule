@@ -17,11 +17,8 @@ YouTube Data API v3 を利用し、
 
 🧰 使用技術
 ---
-言語	Python
-フレームワーク	Flask
-API	YouTube Data API v3
-フロント	HTML / CSS / JavaScript
-その他	Jinja2テンプレート、datetime（JST変換）
+<img width="291" height="100" alt="image" src="https://github.com/user-attachments/assets/61ca478b-c264-4733-8905-731a9960432f" />
+
 💡 工夫した点・こだわりポイント
 1️⃣ YouTube API を使った実データ取得
 
