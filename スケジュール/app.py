@@ -1,11 +1,17 @@
 from flask import Flask, render_template
 import requests
 from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+import os
+
+# .envを読み込む
+load_dotenv()
 
 app = Flask(__name__)
 
-API_KEY = "YOUR_API_KEY_HERE"  # ← 実際のキーは削除
-CHANNEL_ID = "UC6eWCld0KwmyHFbAqK3V-Rw"  # 博衣こより
+# .env から取得
+API_KEY = os.getenv("API_KEY")
+CHANNEL_ID = os.getenv("CHANNEL_ID")  # こより
 
 # ==============================
 # 最新の動画IDを取得
@@ -15,7 +21,7 @@ def get_video_ids():
     params = {
         "part": "id",
         "channelId": CHANNEL_ID,
-        "maxResults": 20,   # 20件まで取得
+        "maxResults": 20,  
         "order": "date",
         "type": "video",
         "key": API_KEY
@@ -85,4 +91,5 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
+
 
