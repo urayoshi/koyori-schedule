@@ -1,19 +1,19 @@
-# Koyori Schedule
+# こより配信スケジュール
 
-Flask app for viewing Hakuikoyori YouTube stream information with YouTube Data API v3.
+YouTube Data API v3 を使って、博衣こよりさんの配信情報を一覧表示する Flask アプリです。
 
-The app shows three categories:
+このアプリでは、以下の 3 カテゴリを表示します。
 
 - `LIVE`
 - `Upcoming`
 - `Archive`
 
-## Overview
+## 概要
 
-This project fetches videos from a YouTube channel and renders them in a simple web page.
-Times from the API are converted to JST before display.
+YouTube チャンネルから動画情報を取得し、ブラウザで見やすく表示するシンプルな Web アプリです。  
+API から取得した時刻は JST に変換して表示します。
 
-## Tech Stack
+## 使用技術
 
 - Python
 - Flask
@@ -21,50 +21,48 @@ Times from the API are converted to JST before display.
 - python-dotenv
 - YouTube Data API v3
 
-## Requirements
+## 動作要件
 
-- Python 3.10 or later
-- A YouTube Data API v3 key
+- Python 3.10 以降
+- YouTube Data API v3 の API キー
 
-## Setup
+## セットアップ
 
-1. Install dependencies.
+1. 依存パッケージをインストールします。
 
 ```bash
 pip install flask requests python-dotenv
 ```
 
-2. Create `.env`.
-
-You can copy `example.env` and update it:
+2. `.env` ファイルを作成します。`example.env` をコピーして編集しても構いません。
 
 ```env
 API_KEY=YOUR_YOUTUBE_API_KEY
 CHANNEL_ID=UC6eWCld0KwmyHFbAqK3V-Rw
 ```
 
-`CHANNEL_ID` is optional. If omitted, the app uses `UC6eWCld0KwmyHFbAqK3V-Rw`.
+`CHANNEL_ID` は省略可能です。未設定の場合は `UC6eWCld0KwmyHFbAqK3V-Rw` が使われます。
 
-## Run
+## 起動方法
 
 ```bash
 python app.py
 ```
 
-Open:
+起動後、ブラウザで以下へアクセスしてください。
 
 ```text
 http://127.0.0.1:5000
 ```
 
-## Environment Variables
+## 環境変数
 
-- `API_KEY`: YouTube Data API v3 key
-- `CHANNEL_ID`: target YouTube channel ID
+- `API_KEY`: YouTube Data API v3 の API キー
+- `CHANNEL_ID`: 取得対象の YouTube チャンネル ID
 
-The app loads `.env` from the same directory as `app.py`.
+`.env` は `app.py` と同じディレクトリから読み込まれます。
 
-## Project Structure
+## ディレクトリ構成
 
 ```text
 koyori-schedule/
@@ -76,17 +74,17 @@ koyori-schedule/
     `-- index.html
 ```
 
-## What The App Does
+## アプリの動作
 
-- Calls the YouTube Search API to get video IDs
-- Calls the YouTube Videos API to get details
-- Splits results into live, upcoming, and archived videos
-- Removes duplicates between sections
-- Converts timestamps to JST
-- Renders the result with Flask templates
+- YouTube Search API で動画 ID を取得
+- YouTube Videos API で詳細情報を取得
+- 動画を `LIVE`、`Upcoming`、`Archive` に分類
+- セクション間の重複動画を除外
+- 日時を JST に変換
+- Flask テンプレートで画面表示
 
-## Notes
+## 注意点
 
-- The app raises an error at startup if `API_KEY` is missing.
-- Invalid `.env` syntax prevents environment variables from loading.
-- YouTube API quota limits still apply.
+- `API_KEY` が未設定だと、起動時にエラーになります。
+- `.env` の書式が正しくないと、環境変数を読み込めません。
+- YouTube API のクォータ制限の影響を受けます。
